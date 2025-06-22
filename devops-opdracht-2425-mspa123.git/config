@@ -1,0 +1,10 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = true
+	symlinks = false
+	ignorecase = true
+[remote "origin"]
+	url = https://github.com/Avans/devops-opdracht-2425-mspa123.git
+	fetch = +refs/*:refs/*
+	mirror = true

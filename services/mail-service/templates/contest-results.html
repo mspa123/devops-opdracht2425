@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contest Resultaten - Photo Hunt</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 2em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .contest-info {
+            background-color: #e8f4fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .results-table th {
+            background-color: #34495e;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+        .results-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        .results-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .winner {
+            background-color: #d4edda !important;
+            border-left: 4px solid #28a745;
+        }
+        .score {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ecf0f1;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .stat-item {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            flex: 1;
+            margin: 0 10px;
+        }
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">📸 Photo Hunt</div>
+            <h1>Contest Resultaten</h1>
+        </div>
+        
+        <div class="contest-info">
+            <h2>🏆 {{contestTitle}}</h2>
+            <p><strong>Einddatum:</strong> {{endDate}}</p>
+            <p><strong>Beschrijving:</strong> {{description}}</p>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">{{totalParticipants}}</div>
+                <div>Deelnemers</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">{{totalSubmissions}}</div>
+                <div>Inzendingen</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">{{averageScore}}</div>
+                <div>Gem. Score</div>
+            </div>
+        </div>
+        
+        <h3>📊 Resultaten Overzicht</h3>
+        <table class="results-table">
+            <thead>
+                <tr>
+                    <th>Rang</th>
+                    <th>Deelnemer</th>
+                    <th>E-mail</th>
+                    <th>Score</th>
+                    <th>Inzending Datum</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each participants}}
+                <tr class="{{#if isWinner}}winner{{/if}}">
+                    <td>{{rank}}</td>
+                    <td>{{name}}</td>
+                    <td>{{email}}</td>
+                    <td class="score">{{score}}</td>
+                    <td>{{submissionDate}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        
+        <div style="margin: 20px 0; padding: 15px; background-color: #f8f9fa; border-radius: 8px;">
+            <h4>🏅 Winnaar</h4>
+            <p><strong>{{winnerName}}</strong> heeft gewonnen met een score van <strong>{{winnerScore}}</strong>!</p>
+        </div>
+        
+        <p>Bedankt voor het organiseren van deze contest. Alle deelnemers hebben een individuele score ontvangen.</p>
+        
+        <div class="footer">
+            <p>Deze e-mail is automatisch gegenereerd. Reageer niet op deze e-mail.</p>
+            <p>&copy; 2024 Photo Hunt. Alle rechten voorbehouden.</p>
+        </div>
+    </div>
+</body>
+</html> 

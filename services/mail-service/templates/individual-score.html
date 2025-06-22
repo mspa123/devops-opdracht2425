@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Je Score - Photo Hunt</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 2em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .contest-info {
+            background-color: #e8f4fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        .score-display {
+            text-align: center;
+            margin: 30px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+        }
+        .score-number {
+            font-size: 4em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .score-label {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        .position-info {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .position-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #3498db;
+        }
+        .winner-badge {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ecf0f1;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        .encouragement {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">📸 Photo Hunt</div>
+            <h1>Je Contest Resultaat</h1>
+        </div>
+        
+        <div class="contest-info">
+            <h2>🏆 {{contestTitle}}</h2>
+            <p><strong>Einddatum:</strong> {{endDate}}</p>
+            <p><strong>Beschrijving:</strong> {{description}}</p>
+        </div>
+        
+        <div class="score-display">
+            <div class="score-label">Je Score</div>
+            <div class="score-number">{{score}}</div>
+            <div class="score-label">van de 100 punten</div>
+        </div>
+        
+        <div class="position-info">
+            <div class="position-number">{{position}}</div>
+            <div>van de {{totalParticipants}} deelnemers</div>
+            {{#if isWinner}}
+            <div class="winner-badge">🏅 WINNAAR!</div>
+            {{/if}}
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">{{totalParticipants}}</div>
+                <div>Totaal Deelnemers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{{averageScore}}</div>
+                <div>Gemiddelde Score</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{{highestScore}}</div>
+                <div>Hoogste Score</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{{submissionDate}}</div>
+                <div>Inzending Datum</div>
+            </div>
+        </div>
+        
+        {{#if isWinner}}
+        <div class="encouragement">
+            <strong>🎉 Gefeliciteerd!</strong> Je hebt gewonnen! Je foto was de beste van alle deelnemers.
+        </div>
+        {{else}}
+        <div class="encouragement">
+            <strong>💪 Goed gedaan!</strong> Je hebt deelgenomen aan de contest. Blijf oefenen en probeer het nog eens!
+        </div>
+        {{/if}}
+        
+        <p>Bedankt voor je deelname aan deze Photo Hunt contest. Blijf deelnemen aan nieuwe uitdagingen!</p>
+        
+        <div class="footer">
+            <p>Deze e-mail is automatisch gegenereerd. Reageer niet op deze e-mail.</p>
+            <p>&copy; 2024 Photo Hunt. Alle rechten voorbehouden.</p>
+        </div>
+    </div>
+</body>
+</html> 

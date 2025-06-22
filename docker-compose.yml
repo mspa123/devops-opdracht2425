@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: photo-hunt-mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: photo-hunt
+    volumes:
+      - ./database:/data/db
+      - ./database/init:/docker-entrypoint-initdb.d
+    ports:
+      - "27017:27017"  # Alleen voor development
+    networks:
+      - photo-hunt-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: photo-hunt-rabbitmq
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"   # AMQP port
+      - "15672:15672" # Management UI port
+    networks:
+      - photo-hunt-network
+
+  score-service:
+    build:
+      context: ./services/score-service
+      dockerfile: Dockerfile
+    container_name: photo-hunt-score-service
+    restart: always
+    environment:
+      PORT: 12345
+      MONGO_URL: mongodb://admin:password123@mongodb:27017/photo-hunt?authSource=admin
+      AMQP_URL: amqp://guest:guest@rabbitmq:5672
+    ports:
+      - "3000:12345"
+    volumes:
+      - ./services/score-service:/app
+      - /app/node_modules
+    depends_on:
+      - mongodb
+      - rabbitmq
+    networks:
+      - photo-hunt-network
+
+  mail-service:
+    build:
+      context: ./services/mail-service
+      dockerfile: Dockerfile
+    container_name: photo-hunt-mail-service
+    restart: always
+    environment:
+      PORT: 3006
+      AMQP_URL: amqp://guest:guest@rabbitmq:5672
+      SMTP_HOST: smtp.gmail.com
+      SMTP_PORT: 587
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASS: ${SMTP_PASS}
+      EMAIL_FROM: ${EMAIL_FROM:-noreply@photohunt.com}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3000}
+    ports:
+      - "3006:3006"
+    depends_on:
+      - rabbitmq
+    networks:
+      - photo-hunt-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  photo-hunt-network:
+    driver: bridge
